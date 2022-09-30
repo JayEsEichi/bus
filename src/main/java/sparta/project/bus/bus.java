@@ -51,7 +51,9 @@ public class bus extends publicTransport {
         b.busInformation(transport);
 
         // 6차 상태
-
+        fuel = -55;
+        b.changeBussituation(transport, fuel);
+        b.busInformation(transport);
     }
 
 
@@ -67,37 +69,26 @@ public class bus extends publicTransport {
         }
     }
 
-    // 버스 상태 변경
+    // 버스 상태 변경 및 속도 변경
     public void changeBussituation(publicTransport transport, int fuel){
         int fuel_volume = transport.getFuel_volume();
 
         if(transport.getFuel_volume() <= 0 || fuel_volume > transport.getFuel_volume() + fuel){
             transport.setFuel_volume(transport.getFuel_volume() + fuel);
             transport.setSituation("차고지행");
-        }else if(transport.getFuel_volume() < 10){
-            transport.setSituation("주유가 필요하다");
-        }else if(fuel_volume < transport.getFuel_volume() + fuel){
-            transport.setFuel_volume(transport.getFuel_volume() + fuel);
-            transport.setSituation("운행 중");
-        }
 
-    }
-
-    // 버스 정보
-    public void busInformation(publicTransport transport, int fuel){
-        int fuel_volume = transport.getFuel_volume();
-
-        if(transport.getFuel_volume() <= 0 || fuel_volume > transport.getFuel_volume() + fuel){
+        }else if(transport.getFuel_volume() < 10 ){
             transport.setFuel_volume(transport.getFuel_volume() + fuel);
             transport.setSituation("차고지행");
-        }else if(transport.getFuel_volume() < 10){
-            transport.setSituation("주유가 필요하다");
+            System.out.println("주유가 필요하다.");
+
         }else if(fuel_volume < transport.getFuel_volume() + fuel){
             transport.setFuel_volume(transport.getFuel_volume() + fuel);
             transport.setSituation("운행 중");
         }
 
     }
+
 
 
     public void busInformation(publicTransport transport){
