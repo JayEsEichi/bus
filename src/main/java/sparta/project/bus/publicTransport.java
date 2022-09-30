@@ -7,10 +7,6 @@ public class publicTransport {
     int speed = 0;
     int change_speed = 0;
     int maximum_passenger = 0;
-    int passenger = 0;
-    int fuel = 0;
-    int price = 0;
-    String situation = "";
 
 
     // getter
@@ -34,13 +30,6 @@ public class publicTransport {
         return maximum_passenger;
     }
 
-    public int getFuel() { return fuel; }
-
-    public String getSituation() { return situation; }
-
-    public int getPassenger() { return passenger; }
-
-    public int getPrice() { return price; }
 
 
     // setter
@@ -61,14 +50,6 @@ public class publicTransport {
     public void setMaximum_passenger(int maximum_passenger) {
         this.maximum_passenger = maximum_passenger;
     }
-
-    public void setFuel(int fuel) { this.fuel = fuel; }
-
-    public void setSituation(String situation) { this.situation = situation; }
-
-    public void setPassenger(int passenger) { this.passenger = passenger; }
-
-    public void setPrice(int price) { this.price = price; }
 
 
 }
