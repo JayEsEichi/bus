@@ -3,67 +3,86 @@ package sparta.project.bus;
 public class bus extends publicTransport {
 
     int passenger; // 현재 승객 수
-    int fuel; // 주유량
-
-    publicTransport transport = new publicTransport();
 
     bus(int bus_num1, int maximum_passenger, int price, String situation){
-        transport.setTransport_num(bus_num1);
-        transport.setMaximum_passenger(maximum_passenger);
-        transport.setPrice(price);
-        transport.setSituation(situation);
+        setTransport_num(bus_num1);
+        setMaximum_passenger(maximum_passenger);
+        setPrice(price);
+        setSituation(situation);
+        driveBus();
     }
 
     void driveBus() {
-        System.out.println();
-        System.out.println("버스 번호 = " + transport.getTransport_num());
-        System.out.println("최대 승객 수 = " + transport.getMaximum_passenger());
+        System.out.println("===============경계선=================");
+        System.out.println("버스 번호 = " + getTransport_num());
+        System.out.println("최대 승객 수 = " + getMaximum_passenger());
         System.out.println("현재 승객 수 = " + passenger);
-        System.out.println("잔여 승객 수 = " + (transport.getMaximum_passenger() - passenger));
-        System.out.println("요금 = " + (price * passenger));
-        System.out.println("주유량 = " + transport.getFuel_volume());
-        System.out.println("현재 속도 = " + transport.getSpeed());
-        System.out.println("상태 = " + transport.getSituation());
-
+        System.out.println("잔여 승객 수 = " + (getMaximum_passenger() - passenger));
+        System.out.println("요금 = " + getPrice());
+        System.out.println("주유량 = " + getFuel_volume()); // 대중교통 기본값
+        System.out.println("현재 속도 = " + getSpeed()); // 대중교통 기본값
+        System.out.println("상태 = " + getSituation());
+        System.out.println("===============경계선=================");
     }
 
 
     void changeBusSituation(int fuel) {
-        int first_fuel_volume = this.fuel_volume;
-        transport.setFuel_volume(fuel_volume + fuel);
+        int first_fuel_volume = getFuel_volume();
+        setFuel_volume(getFuel_volume() + fuel);
 
-        if(transport.getFuel_volume() <= 0 || first_fuel_volume > transport.getFuel_volume()) {
-            this.situation = "차고지행";
-            this.fuel_volume = transport.getFuel_volume();
+        if(getFuel_volume() <= 0 || first_fuel_volume > getFuel_volume()) {
+            setSituation("차고지행");
+            setFuel_volume(getFuel_volume());
 
-        }else if(first_fuel_volume < transport.getFuel_volume()){
-            this.situation = "운행 중";
-            this.fuel_volume = transport.getFuel_volume();
+            System.out.println("주유량 = " + getFuel_volume());
+
+            if(getFuel_volume() < 10){
+                System.out.println("주유 필요");
+            }
+            System.out.println();
+
+        }else if(first_fuel_volume < getFuel_volume()){
+            System.out.println("상태 = " + getSituation());
+            System.out.println("주유량 = " + getFuel_volume());
+            System.out.println();
+
+            setSituation("운행 중");
+
         }
-        driveBus();
+
     }
 
     void ridePassenger(int passenger) {
-        if(maximum_passenger - passenger >= 0 && situation == "운행 중"){
-            this.passenger = this.passenger + passenger;
-        }else if(maximum_passenger - passenger < 0){
+        if(getMaximum_passenger() - passenger >= 0){
+            this.passenger = passenger;
+            setPrice(this.passenger * getPrice());
+
+            System.out.println("탑승 승객 수 = " + this.passenger);
+            System.out.println("잔여 승객 수 = " + (getMaximum_passenger() - this.passenger));
+            System.out.println("요금 = " + getPrice());
+            System.out.println();
+
+            setPrice(getPrice() / this.passenger);
+            return;
+
+        }else if(getMaximum_passenger() - passenger < 0){
             System.out.println("!!!!최대 승객 수 초과!!!!");
+            System.out.println();
+            return;
         }
 
-        driveBus();
     }
 
+//    void changeSpeed(int fuel){
+//        if(getFuel_volume() - fuel >= 10){
+//
+//        }else if(getFuel_volume() - fuel < 10){
+//            System.out.println("주유 필요");
+//            System.out.println();
+//        }
+//    }
 
 
-    void changeSpeed(int fuel) {
-        if(transport.getFuel_volume() + fuel < 10) {
-            System.out.println("주유가 필요하다.");
-            this.situation = "차고지행";
-            this.fuel_volume = transport.getFuel_volume();
-        }
-
-        driveBus();
-    }
 
 }
 

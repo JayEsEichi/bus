@@ -63,4 +63,12 @@ public class publicTransport {
     public void setSituation(String situation) {this.situation = situation;}
 
 
+    void changeSpeed(int fuel) {
+        if(getFuel_volume() + fuel < 10) {
+            System.out.println("주유가 필요하다.");
+            setSituation("차고지행");
+            setFuel_volume(getFuel_volume());
+        }
+    }
+
 }
