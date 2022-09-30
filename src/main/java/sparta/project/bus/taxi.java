@@ -1,6 +1,6 @@
 package sparta.project.bus;
 
-public class taxi {
+public class taxi extends publicTransport{
 
     String destination = ""; // 목적지
     int destination_distance = 0; // 목적지까지의 거리

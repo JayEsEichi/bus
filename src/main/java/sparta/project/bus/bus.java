@@ -1,72 +1,100 @@
 package sparta.project.bus;
 
-public class bus {
+public class bus extends publicTransport {
     public static void main(String[] args) {
-        int transport_num = 1; // 버스 번호
-        int passenger = 0; // 현재 승객 수
+
         int maximum_passenger = 30; // 최대 승객 수
-        String situation = "운행"; // 상태
+        int passenger = 0; // 현재 승객 수
         int price = 1000; // 요금
         int fuel = 0;
+        String situation = "운행 중"; // 상태
+        int speed = 0;
+        final int bus_num = 1;
+        final int bus_num2 = 2;
 
         publicTransport transport = new publicTransport();
+        bus b = new bus();
 
-        // 결과 1 : 서로 다른 버스인지 확인
-        transport.setTransport_num(transport_num);
-        transport_num = 2;
-        transport.transportNumDifference(transport_num);
+        if (bus_num != bus_num2) {
+            transport.setTransport_num(bus_num);
+            transport.setMaximum_passenger(maximum_passenger);
+            transport.setPassenger(passenger);
+            transport.setPrice(price);
+            transport.setFuel(fuel);
+            transport.setSituation(situation);
+        }
 
-        System.out.println();
+        // 초기
+        //b.changeBussituation(transport);
+        b.busInformation(transport);
 
-        // 결과 2 : 탑승 승객 수, 잔여 승객 수, 요금 확인
-        transport.setMaximum_passenger(maximum_passenger);
+        // 1차 상태
         passenger = 2;
-        transport.setPassenger(passenger);
-        transport.setPrice(price);
-        transport.ride_passenger();
+        b.ridePassenger(transport,passenger);
+        b.busInformation(transport);
 
-        System.out.println();
+        // 2차 상태
+        fuel = -50;
+        b.changeBussituation(transport, fuel);
+        b.busInformation(transport);
 
-        // 결과 3 : 주유량
-        fuel = 50;
-        transport.setFuel(fuel);
-        transport.fuelControl();
-
-        System.out.println();
-
-        // 결과 4 : 상태, 2차 주유량
-        situation = "차고지행";
-        transport.setSituation(situation);
+        // 3차 상태
         fuel = 10;
-        transport.setFuel(fuel);
-        transport.changeTransportSituation();
+        b.changeBussituation(transport, fuel);
+        b.busInformation(transport);
 
-        System.out.println();
-
-        // 결과 5 : 승객 수 초과 여부
-        situation = "운행중";
-        transport.setSituation(situation);
+        // 4차 상태
         passenger = 45;
-        transport.setPassenger(passenger);
-        transport.changeDriveSituation();
+        b.ridePassenger(transport,passenger);
+        b.busInformation(transport);
 
-        System.out.println();
-
-        // 결과 6 : 탑승 승객 수, 잔여 승객 수, 요금 확인
-        transport.setMaximum_passenger(maximum_passenger);
+        // 5차 상태
         passenger = 5;
-        transport.setPassenger(passenger);
-        transport.setPrice(price);
-        transport.ride_passenger();
+        b.ridePassenger(transport,passenger);
+        b.busInformation(transport);
+    }
 
-        System.out.println();
+    public void ridePassenger(publicTransport transport, int passenger){
+        if(transport.getMaximum_passenger() - passenger < 0){
+            System.out.println("최대 승객 수 초과");
+        }else {
+            transport.setPassenger(transport.getPassenger() + passenger);
+            transport.setMaximum_passenger(transport.getMaximum_passenger() - transport.getPassenger());
+            transport.setPrice(transport.getPassenger() * 1000);
 
-        fuel = 55;
-        transport.setFuel(fuel);
-        transport.fuelControl();
+        }
+    }
 
+    public void changeBussituation(publicTransport transport, int fuel){
+        int fuel_volume = transport.getFuel_volume();
+
+        if(transport.getFuel_volume() <= 0 || fuel_volume > transport.getFuel_volume() + fuel){
+            transport.setFuel_volume(transport.getFuel_volume() + fuel);
+            transport.setSituation("차고지행");
+        }else if(transport.getFuel_volume() < 10){
+            transport.setSituation("주유가 필요하다");
+        }else if(fuel_volume < transport.getFuel_volume() + fuel){
+            transport.setFuel_volume(transport.getFuel_volume() + fuel);
+            transport.setSituation("운행 중");
+        }
 
     }
 
+    public void busInformation(publicTransport transport){
+        System.out.println();
+        System.out.println("[버스 상태 정보]");
+        System.out.println("버스 번호 = " + transport.getTransport_num());
+        System.out.println("최대 승객 수 = " + 30);
+        System.out.println("탑승 승객 수 = " + transport.getPassenger());
+        System.out.println("잔여 승객 수 = " + transport.getMaximum_passenger());
+        System.out.println("요금 확인 = " + transport.getPrice());
+        System.out.println("주유량 = " + transport.getFuel_volume());
+        System.out.println("상태 = " + transport.getSituation());
+        System.out.println();
+    }
+
+
 
 }
+
+
