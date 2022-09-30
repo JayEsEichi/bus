@@ -9,23 +9,20 @@ public class bus extends publicTransport {
         int fuel = 0;
         String situation = "운행 중"; // 상태
         int speed = 0;
-        final int bus_num = 1;
-        final int bus_num2 = 2;
 
         publicTransport transport = new publicTransport();
         bus b = new bus();
 
-        if (bus_num != bus_num2) {
-            transport.setTransport_num(bus_num);
-            transport.setMaximum_passenger(maximum_passenger);
-            transport.setPassenger(passenger);
-            transport.setPrice(price);
-            transport.setFuel(fuel);
-            transport.setSituation(situation);
-        }
+        final int bus_num = (int)(Math.random() * 1000);
 
-        // 초기
-        //b.changeBussituation(transport);
+        transport.setTransport_num(bus_num);
+        transport.setMaximum_passenger(maximum_passenger);
+        transport.setPassenger(passenger);
+        transport.setPrice(price);
+        transport.setFuel(fuel);
+        transport.setSituation(situation);
+
+        // 초기 운행
         b.busInformation(transport);
 
         // 1차 상태
@@ -52,8 +49,13 @@ public class bus extends publicTransport {
         passenger = 5;
         b.ridePassenger(transport,passenger);
         b.busInformation(transport);
+
+        // 6차 상태
+
     }
 
+
+    // 승객 탑승
     public void ridePassenger(publicTransport transport, int passenger){
         if(transport.getMaximum_passenger() - passenger < 0){
             System.out.println("최대 승객 수 초과");
@@ -65,6 +67,7 @@ public class bus extends publicTransport {
         }
     }
 
+    // 버스 상태 변경
     public void changeBussituation(publicTransport transport, int fuel){
         int fuel_volume = transport.getFuel_volume();
 
@@ -79,6 +82,23 @@ public class bus extends publicTransport {
         }
 
     }
+
+    // 버스 정보
+    public void busInformation(publicTransport transport, int fuel){
+        int fuel_volume = transport.getFuel_volume();
+
+        if(transport.getFuel_volume() <= 0 || fuel_volume > transport.getFuel_volume() + fuel){
+            transport.setFuel_volume(transport.getFuel_volume() + fuel);
+            transport.setSituation("차고지행");
+        }else if(transport.getFuel_volume() < 10){
+            transport.setSituation("주유가 필요하다");
+        }else if(fuel_volume < transport.getFuel_volume() + fuel){
+            transport.setFuel_volume(transport.getFuel_volume() + fuel);
+            transport.setSituation("운행 중");
+        }
+
+    }
+
 
     public void busInformation(publicTransport transport){
         System.out.println();

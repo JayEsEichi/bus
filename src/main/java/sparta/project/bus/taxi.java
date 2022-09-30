@@ -14,16 +14,6 @@ public class taxi extends publicTransport{
 
 
     public static void main(String[] args) {
-//        publicTransport transport = new publicTransport();
-//        transport.
     }
-
-//    public int plusPrice(){
-//        return
-//    }
-
-//    public int payment(){
-//        return
-//    }
 
 }
