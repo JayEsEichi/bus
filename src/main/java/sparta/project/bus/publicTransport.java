@@ -7,6 +7,9 @@ public class publicTransport {
     int speed = 0;
     int change_speed = 0;
     int maximum_passenger = 0;
+    int price = 0;
+    String situation = "";
+
 
 
     // getter
@@ -30,6 +33,10 @@ public class publicTransport {
         return maximum_passenger;
     }
 
+    public int getPrice() { return price; }
+
+    public String getSituation() { return situation;}
+
 
 
     // setter
@@ -50,6 +57,10 @@ public class publicTransport {
     public void setMaximum_passenger(int maximum_passenger) {
         this.maximum_passenger = maximum_passenger;
     }
+
+    public void setPrice(int price) { this.price = price; }
+
+    public void setSituation(String situation) {this.situation = situation;}
 
 
 }
